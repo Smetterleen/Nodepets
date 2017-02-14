@@ -1,0 +1,31 @@
+{
+  "name": "nodepets",
+  "version": "0.0.1",
+  "description": "An API for neopets",
+  "main": "app.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smetterleen/Nodepets.git"
+  },
+  "keywords": [
+    "neopets",
+    "api",
+    "node"
+  ],
+  "author": "Smetterleen",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Smetterleen/Nodepets/issues"
+  },
+  "homepage": "https://github.com/Smetterleen/Nodepets#readme",
+  "devDependencies": {
+    "jasmine": "^2.5.3"
+  },
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "request": "^2.79.0"
+  }
+}
