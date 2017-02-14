@@ -1,4 +1,7 @@
-var request = require( 'request' ),
+var parser = require( 'cheerio' ),
+    request = require( 'request' ).defaults( {
+        jar: true,
+    } ),
     url = require( 'url' );
 
 module.exports = function( err, resp, body, next ) {
@@ -11,17 +14,29 @@ module.exports = function( err, resp, body, next ) {
     
     var query = url.parse( resp.request.uri.href, true ).query,
         dest = query.destination;
-    
+
     request( {
-        uri: resp.request.uri.href,
+        uri: 'http://www.neopets.com/login.phtml',
         method: 'POST',
         form: {
-            destination: dest;
-            password: '',
-            username: '',
+            destination: dest,
+            password: 'tester01',
+            username: 'nodepets_tester',
         },
-    } );
+        followAllRedirects: true,
+    }, function( err, resp, body ) {
+
+        if ( resp.statusCode === 403 ) {
+
+            if ( body === '' )
+                throw new Error( "Too many logins" );
+
+            throw new Error( "Invalid credentials" );
+
+        }
     
-    return next( new Error( "Login required!" ), resp, body );
+        return next( err, resp, body );
+    
+    } );
     
 };

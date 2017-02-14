@@ -10,6 +10,10 @@ var login = require( '../middleware/login.js' );
         request( {
             url: 'http://www.neopets.com/stockmarket.phtml',
             method: "GET",
+            qs: {
+                type: 'list',
+                full: 'true',
+            },
         }, function( err, resp, body ) {
             
             if ( err )
@@ -19,8 +23,17 @@ var login = require( '../middleware/login.js' );
                 console.log( 'Unexpected status code: ' + resp.statusCode );
             
             var $ = parser.load( body );
+
+            var stock_list = $( '.content table tr' ).map( function( tr_i, tr ) {
+                return {
+                    name: $( tr ).find( 'td' ).eq( 1 ).text(),
+                };
+            } ).get();
+
+            console.log( stock_list );
             
             cb( null );
+
         } );
         
     };
