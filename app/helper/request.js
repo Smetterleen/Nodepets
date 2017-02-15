@@ -1,14 +1,23 @@
-var request = require( 'request' ).defaults( {
+var fs = require( 'fs' ),
+    request = require( 'request' );
+
+
+fs.readFile( '../.tmp/cookies.json', function( err, data ) {
+    console.log( err, data );
+} );
+
+request = request.defaults( {
     jar: true,
 } );
+
 
 var middleware = [
     require( '../middleware/login.js' ),
     require( '../middleware/base_info.js' ),
 ];
-    
+ 
 module.exports = function( options, callback ) {
-        
+     
     return request( options, function( err, resp, body ) {
 
         var middleware_i = 0;
@@ -27,3 +36,9 @@ module.exports = function( options, callback ) {
     } );
 
 };
+
+module.exports.raw = function( options, callback ) {
+    
+    return request( options, function( err, resp, body ) {
+        
+        request.jar().getCookies( 'http://www.neopets.be' )i;

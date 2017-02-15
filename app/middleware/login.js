@@ -1,7 +1,5 @@
 var parser = require( 'cheerio' ),
-    request = require( 'request' ).defaults( {
-        jar: true,
-    } ),
+    request = require( '../helper/request.js' ).raw,
     url = require( 'url' );
 
 module.exports = function( err, resp, body, next ) {
@@ -35,6 +33,8 @@ module.exports = function( err, resp, body, next ) {
 
         }
     
+        console.log( 'Login' );
+        
         return next( err, resp, body );
     
     } );
